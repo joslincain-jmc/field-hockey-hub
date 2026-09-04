@@ -1,18 +1,49 @@
-import supabase from "../../lib/supabase";
+"use client";
 
-export default async function TeamsPage() {
-  const { data: teams, error } = await supabase
-    .from("teams")
-    .select("*")
-    .order("team_name");
+import { useState } from "react";
 
-  if (error) {
-    return (
-      <main className="p-8">
-        <h1>Error Loading Teams</h1>
-      </main>
-    );
-  }
+const teams = [
+  {
+    team_name: "Penn State",
+    division: "D1",
+    conference: "Big Ten",
+  },
+  {
+    team_name: "Maryland",
+    division: "D1",
+    conference: "Big Ten",
+  },
+  {
+    team_name: "Iowa",
+    division: "D1",
+    conference: "Big Ten",
+  },
+  {
+    team_name: "Kean University",
+    division: "D3",
+    conference: "NJAC",
+  },
+  {
+    team_name: "Montclair",
+    division: "D3",
+    conference: "NJAC",
+  },
+  {
+    team_name: "TCNJ",
+    division: "D3",
+    conference: "NJAC",
+  },
+];
+
+export default function TeamsPage() {
+  const [divisionFilter, setDivisionFilter] = useState("All");
+
+  const filteredTeams =
+    divisionFilter === "All"
+      ? teams
+      : teams.filter(
+          (team) => team.division === divisionFilter
+        );
 
   return (
     <main className="min-h-screen bg-green-50 p-8">
@@ -20,29 +51,52 @@ export default async function TeamsPage() {
         NCAA Field Hockey Teams
       </h1>
 
+      <div className="flex justify-center gap-4 mb-8">
+        <button
+          onClick={() => setDivisionFilter("All")}
+          className="bg-gray-700 text-white px-4 py-2 rounded"
+        >
+          All
+        </button>
+
+        <button
+          onClick={() => setDivisionFilter("D1")}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          D1
+        </button>
+
+        <button
+          onClick={() => setDivisionFilter("D2")}
+          className="bg-red-600 text-white px-4 py-2 rounded"
+        >
+          D2
+        </button>
+
+        <button
+          onClick={() => setDivisionFilter("D3")}
+          className="bg-purple-600 text-white px-4 py-2 rounded"
+        >
+          D3
+        </button>
+      </div>
+
+      <p className="text-lg mb-6">
+        {filteredTeams.length} Teams Found
+      </p>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {teams?.map((team) => (
+        {filteredTeams.map((team) => (
           <div
-            key={team.id}
+            key={team.team_name}
             className="bg-white rounded-lg shadow p-4"
           >
             <h2 className="text-xl font-bold">
               {team.team_name}
             </h2>
 
-            <p>
-              <strong>Division:</strong> {team.division}
-            </p>
-
-            <p>
-              <strong>Conference:</strong> {team.conference}
-            </p>
-
-            <p>
-              <strong>Location:</strong>{" "}
-              {team.city || "N/A"},{" "}
-              {team.state || "N/A"}
-            </p>
+            <p>Division: {team.division}</p>
+            <p>Conference: {team.conference}</p>
           </div>
         ))}
       </div>

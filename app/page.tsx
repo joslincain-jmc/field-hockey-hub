@@ -1,13 +1,14 @@
+import Link from 'next/link';
 export default function Home() {
   return (
     <main className="min-h-screen bg-green-50">
       <div className="max-w-6xl mx-auto p-8">
 
-        <h1 className="text-5xl font-bold text-center text-green-800">
+        <h1 className="text-6xl font-bold text-center text-green-800">
           NCAA Field Hockey Hub
         </h1>
 
-        <p className="text-center text-xl mt-4 text-gray-700">
+        <p className="text-center text-2xl mt-4 text-gray-700">
           Your central location for NCAA field hockey schedules.
         </p>
 
@@ -22,31 +23,36 @@ export default function Home() {
             Today's Games
           </h2>
 
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-8 rounded-lg shadow">
             No games available yet.
           </div>
         </section>
 
-        <section className="mt-12">
-          <h2 className="text-3xl font-semibold mb-4">
-            Filter By Division
-          </h2>
+      <section className="mt-12">
+        <h2 className="text-3xl flex justify-center font-semibold mb-4">
+          Division Selection 
+        </h2>
 
-          <div className="flex gap-4">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded">
-              D1
-            </button>
+        <div className="flex justify-center gap-4">
+          <Link href="/teams?division=D1" className="bg-green-600 text-white px-6 py-3 rounded">
+            D1
+          </Link>
 
-            <button className="bg-red-600 text-white px-4 py-2 rounded">
-              D2
-            </button>
+          <Link href="/teams?division=D2" className="bg-green-600 text-white px-6 py-3 rounded">
+            D2
+          </Link>
 
-            <button className="bg-purple-600 text-white px-4 py-2 rounded">
-              D3
-            </button>
-          </div>
-        </section>
+          <Link href="/teams?division=D3" className="bg-green-600 text-white px-6 py-3 rounded">
+            D3
+          </Link>
+        </div>
 
+        <div className="mt-4 flex justify-center">
+          <Link href="/teams">
+            View All Teams
+          </Link>
+        </div>
+      </section>
       </div>
     </main>
   );
